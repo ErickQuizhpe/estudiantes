@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: Sistema Estudiantes
+
+  datasource:
+    url: jdbc:postgresql://${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: ${MAIL_HOST}
+      debug: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+application:
+  security:
+    jwt:
+      key:
+        private: ${JWT_SECRET}
+        expiration: ${JWT_EXPIRATION}
+      user:
+        generator: estudiantes-back
+
+springdoc:
+  swagger-ui:
+    path: /docs/swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+    filter: true
+  api-docs:
+    path: /docs/v3/api-docs
+
+servidor:
+  imagenes: ${SERVIDOR_IMAGENES:http://localhost:8081}
