@@ -2,6 +2,7 @@ package com.api.estudiantes.entity.studen;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Studen {
     
     @Id
@@ -23,15 +25,6 @@ public class Studen {
     
     @Column(nullable = false, unique = true)
     private String matricula;
-    
-    @Column(nullable = false)
-    private String nombres;
-    
-    @Column(nullable = false)
-    private String apellidos;
-    
-    @Column(nullable = false, unique = true)
-    private String email;
     
     @Column(nullable = false)
     private String telefono;
@@ -48,9 +41,9 @@ public class Studen {
     @Column(name = "fecha_ingreso")
     private LocalDate fechaIngreso;
     
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EstadoEstudiante estado;
+    @Builder.Default
+    private Boolean activo = true;
     
     // Relación con usuario
     @OneToOne(fetch = FetchType.LAZY)
@@ -66,7 +59,20 @@ public class Studen {
     @OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Financiera informacionFinanciera;
     
-    public enum EstadoEstudiante {
-        ACTIVO, INACTIVO, SUSPENDIDO, GRADUADO
+    // Métodos de utilidad para acceder a datos del usuario
+    public String getNombres() {
+        return usuario != null ? usuario.getFirstName() : null;
+    }
+    
+    public String getApellidos() {
+        return usuario != null ? usuario.getLastName() : null;
+    }
+    
+    public String getEmail() {
+        return usuario != null ? usuario.getEmail() : null;
+    }
+    
+    public String getNombreCompleto() {
+        return usuario != null ? usuario.getNombreCompleto() : null;
     }
 }

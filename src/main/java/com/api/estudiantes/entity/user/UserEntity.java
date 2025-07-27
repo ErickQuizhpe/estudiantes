@@ -72,6 +72,10 @@ public class UserEntity {
   @Column(name = "avatar_url")
   private String avatarUrl;
 
+  @Column(nullable = false)
+  @Builder.Default
+  private Boolean activo = true;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "user_roles",

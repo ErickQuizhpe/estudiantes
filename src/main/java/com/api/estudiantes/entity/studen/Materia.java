@@ -2,6 +2,7 @@ package com.api.estudiantes.entity.studen;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Materia {
     
     @Id
@@ -36,15 +38,11 @@ public class Materia {
     @Column(nullable = false)
     private String carrera;
     
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EstadoMateria estado;
+    @Builder.Default
+    private Boolean activa = true;
     
     // Relación con notas
     @OneToMany(mappedBy = "materia", cascade = CascadeType.ALL)
     private List<Nota> notas;
-    
-    public enum EstadoMateria {
-        ACTIVA, INACTIVA, SUSPENDIDA
-    }
 }

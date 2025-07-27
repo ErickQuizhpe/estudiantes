@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Table(name = "banners")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Banner {
@@ -22,8 +24,8 @@ public class Banner {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String imageUrl;
   private String description;
+  private String imageUrl;
   private Boolean active;
 
 }

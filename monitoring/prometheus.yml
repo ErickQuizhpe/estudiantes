@@ -1,0 +1,29 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # Configuración para el Sistema de Estudiantes
+  - job_name: 'sistema-estudiantes'
+    static_configs:
+      - targets: ['app:8080']
+    metrics_path: '/api/actuator/prometheus'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    
+  # Métricas personalizadas del sistema
+  - job_name: 'estudiantes-custom-metrics'
+    static_configs:
+      - targets: ['app:8080']
+    metrics_path: '/api/metrics/custom'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    
+  # Prometheus se monitorea a sí mismo
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

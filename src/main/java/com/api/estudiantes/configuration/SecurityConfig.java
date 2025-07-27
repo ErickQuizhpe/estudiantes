@@ -50,25 +50,36 @@ public class SecurityConfig {
           http.requestMatchers(PUT, "/company/**").hasRole("ADMIN");
           // User EndPoints
           http.requestMatchers(POST, "/users/signup").permitAll();
-          http.requestMatchers(GET, "/users/favorite-students").hasRole("ESTUDIANTE");
-          http.requestMatchers(POST, "/users/*/favorite-students").hasRole("ESTUDIANTE");
           http.requestMatchers(POST, "/users").hasRole("ADMIN");
           http.requestMatchers(GET, "/users").hasRole("ADMIN");
           http.requestMatchers(GET, "/users/**").hasRole("ADMIN");
           http.requestMatchers(PUT, "/users/**").hasRole("ADMIN");
           http.requestMatchers(DELETE, "/users/**").hasRole("ADMIN");
-          // Student EndPoints
-          http.requestMatchers(POST, "/students").hasRole("ADMIN");
-          http.requestMatchers(PUT, "/students/**").hasRole("ADMIN");
-          http.requestMatchers(DELETE, "/students/**").hasRole("ADMIN");
-          http.requestMatchers(GET, "/students").hasAnyRole("ADMIN", "ESTUDIANTE");
-          http.requestMatchers(GET, "/students/**").hasAnyRole("ADMIN", "ESTUDIANTE");
-          // Materia EndPoints
+          
+          // Estudiantes EndPoints
+          http.requestMatchers(GET, "/estudiantes/**").hasAnyRole("ADMIN", "ESTUDIANTE");
+          http.requestMatchers(POST, "/estudiantes").hasRole("ADMIN");
+          http.requestMatchers(PUT, "/estudiantes/**").hasRole("ADMIN");
+          http.requestMatchers(DELETE, "/estudiantes/**").hasRole("ADMIN");
+          
+          // Materias EndPoints
+          http.requestMatchers(GET, "/materias/**").hasAnyRole("ADMIN", "ESTUDIANTE");
           http.requestMatchers(POST, "/materias").hasRole("ADMIN");
           http.requestMatchers(PUT, "/materias/**").hasRole("ADMIN");
           http.requestMatchers(DELETE, "/materias/**").hasRole("ADMIN");
-          http.requestMatchers(GET, "/materias").hasAnyRole("ADMIN", "ESTUDIANTE");
-          http.requestMatchers(GET, "/materias/**").hasAnyRole("ADMIN", "ESTUDIANTE");
+          
+          // Notas EndPoints
+          http.requestMatchers(GET, "/notas/**").hasAnyRole("ADMIN", "ESTUDIANTE");
+          http.requestMatchers(POST, "/notas").hasRole("ADMIN");
+          http.requestMatchers(PUT, "/notas/**").hasRole("ADMIN");
+          http.requestMatchers(DELETE, "/notas/**").hasRole("ADMIN");
+          
+          // Financiera EndPoints
+          http.requestMatchers(GET, "/financiera/**").hasAnyRole("ADMIN", "ESTUDIANTE");
+          http.requestMatchers(POST, "/financiera").hasRole("ADMIN");
+          http.requestMatchers(PUT, "/financiera/**").hasRole("ADMIN");
+          http.requestMatchers(DELETE, "/financiera/**").hasRole("ADMIN");
+      
           http.anyRequest().denyAll();
         }).addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
         .build();

@@ -2,6 +2,7 @@ package com.api.estudiantes.entity.studen;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Financiera {
     
     @Id
@@ -34,13 +36,13 @@ public class Financiera {
     @Column(name = "fecha_vencimiento")
     private LocalDate fechaVencimiento;
     
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EstadoPago estadoPago;
+    @Column(name = "al_dia", nullable = false)
+    @Builder.Default
+    private Boolean alDia = true;
     
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_beca")
-    private TipoBeca tipoBeca;
+    @Column(name = "becado", nullable = false)
+    @Builder.Default
+    private Boolean becado = false;
     
     @Column(name = "porcentaje_beca")
     private Integer porcentajeBeca;
@@ -53,19 +55,11 @@ public class Financiera {
     @JoinColumn(name = "estudiante_id", nullable = false)
     private Studen estudiante;
     
-    public enum EstadoPago {
-        AL_DIA, MORA, SUSPENDIDO_POR_MORA, BECADO_TOTAL
-    }
-    
-    public enum TipoBeca {
-        ACADEMICA, DEPORTIVA, SOCIOECONOMICA, CULTURAL, NINGUNA
-    }
-    
     // Método para calcular monto a pagar
     public BigDecimal calcularMontoPagar() {
         BigDecimal montoBase = pensionMensual;
         
-        if (tipoBeca != null && porcentajeBeca != null && porcentajeBeca > 0) {
+        if (becado && porcentajeBeca != null && porcentajeBeca > 0) {
             BigDecimal descuentoBeca = montoBase.multiply(BigDecimal.valueOf(porcentajeBeca))
                     .divide(BigDecimal.valueOf(100));
             montoBase = montoBase.subtract(descuentoBeca);

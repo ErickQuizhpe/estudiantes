@@ -2,6 +2,7 @@ package com.api.estudiantes.entity.studen;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Nota {
     
     @Id
@@ -36,9 +38,9 @@ public class Nota {
     @Column(name = "observaciones")
     private String observaciones;
     
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EstadoNota estado;
+    @Builder.Default
+    private Boolean activa = true;
     
     // Relaciones
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,10 +50,6 @@ public class Nota {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "materia_id", nullable = false)
     private Materia materia;
-    
-    public enum EstadoNota {
-        ACTIVA, ANULADA, PENDIENTE
-    }
     
     // Método para calcular si está aprobado
     public Boolean isAprobado() {
