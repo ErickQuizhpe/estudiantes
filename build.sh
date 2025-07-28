@@ -6,8 +6,12 @@ if [ -z "$JAVA_HOME" ]; then
     export JAVA_HOME=/opt/java/openjdk
 fi
 
-# Make mvnw executable
-chmod +x ./mvnw
-
-# Run the build
-./mvnw clean package -DskipTests
+# Try with system Maven first, fallback to mvnw
+if command -v mvn &> /dev/null; then
+    echo "Using system Maven..."
+    mvn clean package -DskipTests
+else
+    echo "Using Maven wrapper..."
+    chmod +x ./mvnw
+    ./mvnw clean package -DskipTests
+fi
