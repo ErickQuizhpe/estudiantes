@@ -53,13 +53,13 @@ public class SecurityConfig {
           http.requestMatchers(POST, "/users").hasRole("ADMIN");
           http.requestMatchers(GET, "/users").hasRole("ADMIN");
           http.requestMatchers(GET, "/users/**").hasRole("ADMIN");
-          http.requestMatchers(PUT, "/users/**").hasRole("ADMIN");
+          http.requestMatchers(PUT, "/users/**").hasAnyRole("ADMIN", "ESTUDIANTE");
           http.requestMatchers(DELETE, "/users/**").hasRole("ADMIN");
           
           // Estudiantes EndPoints
           http.requestMatchers(GET, "/estudiantes/**").hasAnyRole("ADMIN", "ESTUDIANTE");
           http.requestMatchers(POST, "/estudiantes").hasRole("ADMIN");
-          http.requestMatchers(PUT, "/estudiantes/**").hasRole("ADMIN");
+          http.requestMatchers(PUT, "/estudiantes/**").hasAnyRole("ADMIN","ESTUDIANTE");
           http.requestMatchers(DELETE, "/estudiantes/**").hasRole("ADMIN");
           
           // Materias EndPoints
