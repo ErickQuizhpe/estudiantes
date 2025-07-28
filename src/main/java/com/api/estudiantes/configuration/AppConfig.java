@@ -102,7 +102,8 @@ public class AppConfig implements CommandLineRunner {
     }
 
     // Crear datos de prueba: Usuario estudiante completo
-    if (userRepository.findByUsername("estudiante1").isEmpty()) {
+    if (userRepository.findByUsername("estudiante1").isEmpty() && 
+        userRepository.findByEmail("juan.perez@estudiantes.com").isEmpty()) {
       
       // 1. Crear usuario estudiante
       UserEntity userEstudiante = userRepository.save(UserEntity.builder()
@@ -246,7 +247,8 @@ public class AppConfig implements CommandLineRunner {
     }
 
     // Crear segundo estudiante (diferentes datos para pruebas)
-    if (userRepository.findByUsername("estudiante2").isEmpty()) {
+    if (userRepository.findByUsername("estudiante2").isEmpty() && 
+        userRepository.findByEmail("maria.garcia@estudiantes.com").isEmpty()) {
       
       // Usuario estudiante 2
       UserEntity userEstudiante2 = userRepository.save(UserEntity.builder()
